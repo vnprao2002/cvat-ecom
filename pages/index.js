@@ -44,10 +44,10 @@ export async function getServerSideProps() {
     },
   };
 }
-< !--Messenger Plugin chat Code-- >
+<!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
 
-    <!--Your Plugin chat code-- >
+    <!-- Your Plugin chat code -->
     <div id="fb-customer-chat" class="fb-customerchat">
     </div>
 
@@ -57,20 +57,51 @@ export async function getServerSideProps() {
       chatbox.setAttribute("attribution", "biz_inbox");
     </script>
 
-    <!--Your SDK code-- >
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        xfbml: true,
-        version: 'v18.0'
-      });
+    <!-- Your SDK code -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v18.0'
+        });
       };
 
-    (function(d, s, id) {
+      (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-    fjs.parentNode.insertBefore(js, fjs);
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
-  </script>
+      </script>
+// Messenger Plugin chat Code
+const fbRoot = document.createElement('div');
+fbRoot.id = 'fb-root';
+document.body.appendChild(fbRoot);
+
+// Your Plugin chat code
+const fbCustomerChat = document.createElement('div');
+fbCustomerChat.id = 'fb-customer-chat';
+fbCustomerChat.className = 'fb-customerchat';
+document.body.appendChild(fbCustomerChat);
+
+// Set up Messenger chat settings
+var chatbox = document.getElementById('fb-customer-chat');
+chatbox.setAttribute('page_id', '106852515757072');
+chatbox.setAttribute('attribution', 'biz_inbox');
+
+// Your SDK code
+window.fbAsyncInit = function () {
+  FB.init({
+    xfbml: true,
+    version: 'v18.0',
+  });
+};
+
+(function (d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
