@@ -87,8 +87,8 @@ export default function Header() {
           <StyledNav mobileNavActive={mobileNavActive}>
             <NavLink href={"/"}>Trang chủ</NavLink>
             <NavLink href={"/products"}>Sản phẩm</NavLink>
-            {/* <NavLink href={'/categories'}>Categories</NavLink>
-            <NavLink href={'/account'}>Account</NavLink> */}
+            <NavLink href={'/aboutus'}>Chúng tôi</NavLink>
+            {/* <NavLink href={'/account'}>Account</NavLink> */}
             <NavLink href={"/cart"}> Giỏ hàng ({cartProducts.length})</NavLink>
           </StyledNav>
           <NavButton onClick={() => setMobileNavActive((prev) => !prev)}>
