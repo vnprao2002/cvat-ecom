@@ -1,14 +1,16 @@
-import { useState } from "react";
-import Header from "@/components/Header";
-import styled from "styled-components";
-import Center from "@/components/Center";
+import { useState, lazy, Suspense } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
-import ProductsGrid from "@/components/ProductsGrid";
-import Title from "@/components/Title";
-import { motion, AnimatePresence } from "framer-motion";
+import styled from "styled-components";
 
-// Styled component for the search input
+// Lazy load components
+const Header = lazy(() => import("@/components/Header"));
+const Center = lazy(() => import("@/components/Center"));
+const ProductsGrid = lazy(() => import("@/components/ProductsGrid"));
+const Title = lazy(() => import("@/components/Title"));
+
+// Styled components
 const SearchInput = styled.input`
   @media (min-width: 768px) {
     order: 1; 
@@ -21,42 +23,77 @@ const SearchInput = styled.input`
   background-color: #fff; 
   width: 50; 
   &:focus {
+    // Add focus styles if needed
+  }
+`;
 
+const LoadingSpinner = styled.div`
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #000;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
+const ScrollToTopButton = styled.button`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px;
+  border: none;
+  background-color: #4c707d;
+  color: #fff;
+  border-radius: 50px;
+  cursor: pointer;
 `;
 
 export default function ProductsPage({ products }) {
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filter products based on the search term (case-insensitive)
   const filteredProducts = products.filter((product) =>
     product && product.title && product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
-      <Header />
-      <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0, y: 75 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.25 }}
-        >
-          <Center>
-            <Title>Tất cả sản phẩm</Title>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Header />
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, y: 75 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+          >
+            <Center>
+              <Title>Tất cả sản phẩm</Title>
 
-            {/* Search bar */}
-            <SearchInput
-              type="text"
-              placeholder="Tìm kiếm sản phẩm"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+              <SearchInput
+                type="text"
+                placeholder="Tìm kiếm sản phẩm"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
 
-            {/* Display filtered or all products based on the search term */}
-            <ProductsGrid products={searchTerm ? filteredProducts : products} />
-          </Center>
-        </motion.div>
-      </AnimatePresence>
+              <ProductsGrid products={searchTerm ? filteredProducts : products} />
+            </Center>
+          </motion.div>
+        </AnimatePresence>
+      </Suspense>
+
+      <ScrollToTopButton onClick={scrollToTop}>↑</ScrollToTopButton>
     </>
   );
 }
