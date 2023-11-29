@@ -157,15 +157,15 @@ export default function CartPage() {
           <Center>
             <ColumnsWrapper>
               <Box>
-                <h2>Cart</h2>
-                {!cartProducts?.length && <div>Your cart is empty</div>}
+                <h2>Giỏ hàng</h2>
+                {!cartProducts?.length && <div>Giỏ hàng bạn đang trống!</div>}
                 {products?.length > 0 && (
                   <Table>
                     <thead>
                       <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th style={{ padding: "0 15px" }}>Price</th>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th style={{ padding: "0 15px" }}>Giá tiền</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -215,10 +215,10 @@ export default function CartPage() {
               </Box>
               {!!cartProducts?.length && (
                 <Box>
-                  <h2>Order information</h2>
+                  <h2>Thông tin đặt hàng</h2>
                   <Input
                     type="text"
-                    placeholder="Name"
+                    placeholder="Tên"
                     value={name}
                     name="name"
                     onChange={(ev) => setName(ev.target.value)}
@@ -233,14 +233,14 @@ export default function CartPage() {
                   <CityHolder>
                     <Input
                       type="text"
-                      placeholder="City"
+                      placeholder="Thành phố"
                       value={city}
                       name="city"
                       onChange={(ev) => setCity(ev.target.value)}
                     />
                     <Input
                       type="text"
-                      placeholder="Postal Code"
+                      placeholder="Số điện thoại"
                       value={postalCode}
                       name="postalCode"
                       onChange={(ev) => setPostalCode(ev.target.value)}
@@ -248,20 +248,20 @@ export default function CartPage() {
                   </CityHolder>
                   <Input
                     type="text"
-                    placeholder="Street Address"
+                    placeholder="Địa chỉ"
                     value={streetAddress}
                     name="streetAddress"
                     onChange={(ev) => setStreetAddress(ev.target.value)}
                   />
                   <Input
                     type="text"
-                    placeholder="Country"
+                    placeholder="Quốc gia"
                     value={country}
                     name="country"
                     onChange={(ev) => setCountry(ev.target.value)}
                   />
                   <Button black block onClick={goToPayment}>
-                    Continue to payment
+                    Đặt hàng
                   </Button>
                 </Box>
               )}
