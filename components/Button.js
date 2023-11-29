@@ -45,6 +45,7 @@ export const ButtonStyle = css`
     css`
       background-color: #000;
       color: #fff;
+      
     `}
   ${(props) =>
     props.black &&
@@ -69,6 +70,9 @@ export const ButtonStyle = css`
       background-color: transparent;
       border: 1px solid ${primary};
       color: ${primary};
+      &:hover {
+        background:#fff;
+      }
     `}
   ${(props) =>
     props.size === "l" &&
